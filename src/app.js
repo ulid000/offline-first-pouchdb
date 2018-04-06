@@ -48,13 +48,12 @@ function redrawMessagesList(rows) {
 
 function addMessage(text) {
   var doc = {
-    _id: new Date().toISOString(),
     message: text
   };
-  db.put(doc, function callback(err, result) {
-    if (!err) {
-      console.log('posted a message');
-    }
+  db.post(doc).then(function () {
+    console.log('posted message');
+  }).catch(function (err) {
+    console.log('posing message failed: ' + err);
   });
 }
 
@@ -104,10 +103,13 @@ var db = new PouchDB('messages');
 db.changes({
   since: 'now',
   live: true
-}).on('change', showMessages);
+}).on('change', function() {
+  document.getElementById('syncMessageDiv').textContent = 'local changes';
+  showMessages();
+});
 
 function sync() {
-  document.getElementById('syncMessageDiv').textContent = 'Syncing';
+  document.getElementById('syncMessageDiv').textContent = 'syncing';
   var sync = PouchDB.sync('messages', 'http://testuser:testpw@localhost:5984/messages', {
     live: false,
     retry: false
@@ -125,10 +127,10 @@ function sync() {
     console.log('denied: ' + err);
   }).on('complete', function (info) {
     // handle complete
-    document.getElementById('syncMessageDiv').textContent = 'Sync completed';
+    document.getElementById('syncMessageDiv').textContent = 'sync completed';
     console.log('complete: ' + info);
   }).on('error', function (err) {
-    document.getElementById('syncMessageDiv').textContent = 'Sync failed';
+    document.getElementById('syncMessageDiv').textContent = 'sync failed';
     console.log('error: ' + err);
   });
 }
