@@ -1,0 +1,24 @@
+{
+  "name": "offline-first-pouchdb",
+  "version": "0.0.1",
+  "description": "Offline-Demo PouchDB",
+  "scripts": {
+    "start": "npm run build",
+    "build": "webpack"
+  },
+  "dependencies": {
+    "pouchdb": "^6.4.0"
+  },
+  "license": "MIT",
+  "repository": {
+    "url": "https://github.com/ulid000/offline-first-pouchdb"
+  },
+  "engines": {
+    "node": "8.1.x"
+  },
+  "devDependencies": {
+    "webpack": "^3.11.0",
+    "html-webpack-plugin": "^2.30.1",
+    "clean-webpack-plugin": "^0.1.17"
+  }
+}
