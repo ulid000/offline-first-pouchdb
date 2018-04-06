@@ -99,9 +99,6 @@ function syncButtonClickHandler( event ) {
   sync();
 }
 
-// TODO: add conflict resolution
-
-
 var db = new PouchDB('messages');
 
 db.changes({
